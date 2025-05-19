@@ -1,8 +1,9 @@
-🧠** AI-Powered ATS Tool**
+🧠 AI-Powered ATS Tool
+
 An AI-driven Applicant Tracking System (ATS) that matches multiple resumes against a given job description using NLP and TF-IDF. 
 Built with Streamlit, this tool helps recruiters make smarter hiring decisions quickly and efficiently.
 
-🚀** Features**
+🚀 Features
 ✅ Upload multiple resumes in PDF format
 
 📝 Match resumes with any custom job description
@@ -19,12 +20,12 @@ Built with Streamlit, this tool helps recruiters make smarter hiring decisions q
 
 🔒 Detects and removes duplicate resumes
 
-📸** Screenshot**
+📸 Screenshot
 ![image](https://github.com/user-attachments/assets/dafff5dd-e12a-4f97-bb11-c77d88d02794)
 
 
 
-🛠 **Tech Stack**
+🛠 Tech Stack
 
 Frontend: Streamlit
 
