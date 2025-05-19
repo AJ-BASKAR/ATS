@@ -4,6 +4,7 @@ An AI-driven Applicant Tracking System (ATS) that matches multiple resumes again
 Built with Streamlit, this tool helps recruiters make smarter hiring decisions quickly and efficiently.
 
 🚀 Features
+
 ✅ Upload multiple resumes in PDF format
 
 📝 Match resumes with any custom job description
@@ -21,6 +22,7 @@ Built with Streamlit, this tool helps recruiters make smarter hiring decisions q
 🔒 Detects and removes duplicate resumes
 
 📸 Screenshot
+
 ![image](https://github.com/user-attachments/assets/dafff5dd-e12a-4f97-bb11-c77d88d02794)
 
 
@@ -38,6 +40,7 @@ Similarity Scoring: Cosine Similarity (Sklearn)
 Styling: HTML + CSS in Streamlit
 
 📂 Directory Structure
+
 bash
 Copy
 Edit
@@ -51,12 +54,15 @@ Edit
 
 
 1. Clone the repository
+2. 
 bash
 Copy
 Edit
 git clone https://github.com/AJ-BASKAR/ATS.git
 cd ATS
-2. Create virtual environment (optional but recommended)
+
+4. Create virtual environment (optional but recommended)
+   
 bash
 Copy
 Edit
@@ -64,7 +70,9 @@ python -m venv venv
 venv\Scripts\activate  # For Windows
 # or
 source venv/bin/activate  # For Linux/macOS
+
 3. Install dependencies
+   
 bash
 Copy
 Edit
@@ -90,6 +98,7 @@ Compare it with the job description using TF-IDF + Cosine Similarity
 Display match score and resume preview
 
 📦 Dependencies
+
 text
 Copy
 Edit
@@ -111,4 +120,5 @@ AJ BASKAR
 📧 Connect on LinkedIn (Optional)
 
 📝 License
+
 This project is licensed under the MIT License - see the LICENSE file for details.
