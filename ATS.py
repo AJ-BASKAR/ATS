@@ -11,9 +11,43 @@ import hashlib
 import base64
 import html
 from PyPDF2 import PdfReader  # Install with: pip install PyPDF2
+from docx import Document
+
+
+
 
 # --- PAGE CONFIGURATION ---
-st.set_page_config(page_title="AI-Powered ATS Tool", page_icon="📄", layout="wide")
+st.set_page_config(page_title= "ATS Tool", page_icon="🗃️", layout="wide")
+
+
+st.markdown("""
+    <style>
+    .glow {
+        font-size: 60px;
+        font-weight: bold;
+        color: white;
+        text-align: center;
+        margin-top: 20px;
+        animation: glow 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+        from {
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
+        }
+        to {
+            text-shadow: 0 0 20px #ff00ff, 0 0 30px #ff00ff, 0 0 40px #ff00ff;
+        }
+    }
+
+    body {
+        background-color: #0f0f0f;
+        color: white;
+    }
+    </style>
+
+    <div class="glow"> 📄 AI-Powered ATS Tool</div>
+""", unsafe_allow_html=True)
 
 # --- IMAGE ENCODING FUNCTION ---
 def get_image_base64(img_path):
@@ -145,6 +179,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # --- PROCESS RESUME FUNCTION ---
+
 def process_resume(uploaded_file):
     try:
         pdf = PdfReader(uploaded_file)
@@ -169,7 +204,7 @@ def get_text_hash(text):
     return hashlib.md5(text.encode()).hexdigest()
 
 # --- MAIN UI ---
-st.title("📄 AI-Powered ATS Tool")
+st.title("🗃️ ATS Tool")
 st.subheader("Upload Multiple Resumes & Match with Job Description")
 
 uploaded_files = st.file_uploader("📎 Upload Resumes (PDF format only)", type="pdf", accept_multiple_files=True)
