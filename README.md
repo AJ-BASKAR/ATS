@@ -113,7 +113,8 @@ Make sure to run:
 python -m nltk.downloader stopwords
 python -m spacy download en_core_web_sm
 
-👨‍💻** Author**
+👨‍💻
+Author
 
 AJ BASKAR
 🦄 Passionate about AI, ML, and intuitive user experiences.
