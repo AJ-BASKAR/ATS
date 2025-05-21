@@ -222,22 +222,21 @@ else:
 if st.button("🔍 Predict Match Scores"):
     if uploaded_files and job_description.strip():
         st.subheader("📌 Resume Match Scores")
-
         seen_hashes = set()
         results = []
 
         for file in uploaded_files:
             try:
-                cleaned_resume_text = process_resume(file)
-                text_hash = get_text_hash(cleaned_resume_text)
+                file.seek(0)
+                resume_text = process_resume(file)
+                text_hash = get_text_hash(resume_text)
 
                 if text_hash in seen_hashes:
                     continue
                 seen_hashes.add(text_hash)
 
-                score = match_resume_with_job(cleaned_resume_text, job_description)
-                results.append((file.name, score, cleaned_resume_text))
-
+                score = match_resume_with_job(resume_text, job_description)
+                results.append((file.name, score, resume_text, file))
             except Exception as e:
                 st.error(f"❌ Error processing {file.name}: {e}")
 
@@ -247,22 +246,35 @@ if st.button("🔍 Predict Match Scores"):
             results.sort(key=lambda x: x[1], reverse=True)
             st.success(f"✅ {len(results)} unique resume(s) evaluated.")
 
-            display_count = top_n if top_n else len(results)
-            for idx, (name, score, text) in enumerate(results[:display_count]):
+            for idx, (name, score, text, file_obj) in enumerate(results[:top_n if top_n else len(results)]):
                 score_class = "high" if score >= 75 else "medium" if score >= 50 else "low"
-                top_label = "🏆 Top Match — " if idx == 0 else ""
+                top_label = "🏆 Top Match" if idx == 0 else f"Rank #{idx+1}"
 
-                safe_text = html.escape(text).replace('\n', '<br>')
+                with st.container():
+                    col1, col2, col3 = st.columns([3, 1, 1])
 
-                st.markdown(f"""
-                    <div class="score-card">
-                        <div class="match-tag {score_class}">🎯 {top_label}Match Score: {score}%</div>
-                        <h4>📄 {name}</h4>
-                        <details class="view-details">
-                            <summary style='cursor: pointer;'>🔍 View Resume Details</summary>
-                            <div style="margin-top:10px;">{safe_text}</div>
-                        </details>
-                    </div>
-                """, unsafe_allow_html=True)
+                    with col1:
+                        st.markdown(f"<div class='score-card'>"
+                                    f"<div class='match-tag {score_class}'>🎯 {top_label} — {score}%</div>"
+                                    f"<h4>📄 {name}</h4></div>", unsafe_allow_html=True)
+
+                    with col2:
+                        with st.expander("👁️ View Resume"):
+                            safe_text = html.escape(text).replace('\n', '<br>')
+                            st.markdown(f"<div style='padding:10px;'>{safe_text}</div>", unsafe_allow_html=True)
+
+                        if st.session_state[f'show_resume_{idx}']:
+                            st.markdown(f"### 📄 {name}")
+                            st.markdown("---")
+                            safe_text = html.escape(text).replace('\n', '<br>')
+                            st.markdown(f"<div style='max-height:600px; overflow-y:auto;'>{safe_text}</div>", unsafe_allow_html=True)
+
+
+                    with col3:
+                        file_obj.seek(0)
+                        file_data = file_obj.read()
+                        b64 = base64.b64encode(file_data).decode()
+                        href = f'<a href="data:application/pdf;base64,{b64}" download="{name}">⬇️ Download</a>'
+                        st.markdown(href, unsafe_allow_html=True)
     else:
         st.warning("⚠️ Please upload at least one resume and enter a job description to get match scores.")
