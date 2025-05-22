@@ -246,6 +246,13 @@ if st.button("🔍 Predict Match Scores"):
             results.sort(key=lambda x: x[1], reverse=True)
             st.success(f"✅ {len(results)} unique resume(s) evaluated.")
 
+            # Initialize session_state keys to avoid KeyError
+            for idx in range(len(results)):
+                key = f'show_resume_{idx}'
+                if key not in st.session_state:
+                    st.session_state[key] = False
+
+            # Display results with toggle buttons
             for idx, (name, score, text, file_obj) in enumerate(results[:top_n if top_n else len(results)]):
                 score_class = "high" if score >= 75 else "medium" if score >= 50 else "low"
                 top_label = "🏆 Top Match" if idx == 0 else f"Rank #{idx+1}"
@@ -254,9 +261,10 @@ if st.button("🔍 Predict Match Scores"):
                     col1, col2, col3 = st.columns([3, 1, 1])
 
                     with col1:
-                        st.markdown(f"<div class='score-card'>"
-                                    f"<div class='match-tag {score_class}'>🎯 {top_label} — {score}%</div>"
-                                    f"<h4>📄 {name}</h4></div>", unsafe_allow_html=True)
+                        st.markdown(
+                            f"<div class='score-card'>"
+                            f"<div class='match-tag {score_class}'>🎯 {top_label} — {score}%</div>"
+                            f"<h4>📄 {name}</h4></div>", unsafe_allow_html=True)
 
                     with col2:
                         with st.expander("👁️ View Resume"):
@@ -269,12 +277,13 @@ if st.button("🔍 Predict Match Scores"):
                             safe_text = html.escape(text).replace('\n', '<br>')
                             st.markdown(f"<div style='max-height:600px; overflow-y:auto;'>{safe_text}</div>", unsafe_allow_html=True)
 
-
+                      
                     with col3:
                         file_obj.seek(0)
                         file_data = file_obj.read()
                         b64 = base64.b64encode(file_data).decode()
                         href = f'<a href="data:application/pdf;base64,{b64}" download="{name}">⬇️ Download</a>'
                         st.markdown(href, unsafe_allow_html=True)
+
     else:
         st.warning("⚠️ Please upload at least one resume and enter a job description to get match scores.")
