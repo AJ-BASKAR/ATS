@@ -26,6 +26,9 @@ Built with Streamlit, this tool helps recruiters make smarter hiring decisions q
 ![image](https://github.com/user-attachments/assets/dafff5dd-e12a-4f97-bb11-c77d88d02794)
 
 
+TIRAL LINK :  https://aj-ats.onrender.com
+
+
 
 🛠 Tech Stack
 
